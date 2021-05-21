@@ -18,7 +18,7 @@ chrome.storage.sync.get(['link'], function (result) {
                 height: 26px;
                 border: none;
                 margin-right: 12px;
-                border-radius: 2px;" type="submit">Deploy</button>
+                border-radius: 2px;" type="submit">🚀 Publish changes</button>
             </form>`
     const observer = new MutationObserver(function () {
       let toolbar = document.getElementsByClassName('notion-collection-view-item-add')[0]
