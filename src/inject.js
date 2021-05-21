@@ -6,9 +6,7 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
     const buttonDiv = document.createElement('DIV')
     buttonDiv.setAttribute("id", "trigger_build")
     buttonDiv.innerHTML = `
-            <iframe width="0" height="0" border="0" name="frm" id="frm" style="display: none;"></iframe>
-            <form style="" action="${result.link}" target="frm" method="post">
-                <button style="color: white;
+                <button id="buildButton" style="color: white;
                 line-height: 1.2;
                 background: rgb(0, 150, 109);
                 padding-left: 8px;
@@ -20,10 +18,10 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
                 margin-right: 12px;
                 margin-left: 3px;
                 border-radius: 2px;" type="submit">🚀 Publish changes</button>
-            </form>`
-    const imgbadge = document.createElement('img');
+            `
+    let imgbadge = document.createElement('img');
+    imgbadge.setAttribute('id', "imageBadge")
     if (result.badge) {
-
       imgbadge.src = result.badge
     }
 
@@ -33,6 +31,26 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
       if (toolbar && !button) {
         toolbar.prepend(buttonDiv)
         if (result.badge) toolbar.prepend(imgbadge)
+        let buildButton = document.getElementById('buildButton')
+
+        buildButton.addEventListener('click', async function () {
+          let imageBadge = document.querySelector('#imageBadge')
+          console.log(imageBadge)
+          await fetch(buildHookUrl, { method: "POST" })
+          if (imageBadge !== null)
+            imageBadge.parentNode.removeChild(imageBadge)
+          setTimeout(() => {
+            imgbadge = document.createElement('img');
+            imgbadge.setAttribute('id', "imageBadge")
+            imgbadge.src = result.badge
+            toolbar.prepend(imgbadge)
+          }, 2000)
+
+
+        })
+        // setInterval(() => {
+        //   imgbadge.src = result.badge;
+        // }, 1000)
       }
 
 
