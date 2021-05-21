@@ -1,6 +1,6 @@
 let buildHookUrl;
 
-chrome.storage.sync.get(['link'], function (result) {
+chrome.storage.sync.get(['link', 'badge'], function (result) {
   buildHookUrl = result.link
   if (buildHookUrl) {
     const buttonDiv = document.createElement('DIV')
@@ -18,12 +18,24 @@ chrome.storage.sync.get(['link'], function (result) {
                 height: 26px;
                 border: none;
                 margin-right: 12px;
+                margin-left: 3px;
                 border-radius: 2px;" type="submit">🚀 Publish changes</button>
             </form>`
+    const imgbadge = document.createElement('img');
+    if (result.badge) {
+
+      imgbadge.src = result.badge
+    }
+
     const observer = new MutationObserver(function () {
       let toolbar = document.getElementsByClassName('notion-collection-view-item-add')[0]
       let button = document.getElementById("trigger_build")
-      if (toolbar && !button) toolbar.prepend(buttonDiv)
+      if (toolbar && !button) {
+        toolbar.prepend(buttonDiv)
+        if (result.badge) toolbar.prepend(imgbadge)
+      }
+
+
     });
     const observerConfig = {
       attributes: true,
