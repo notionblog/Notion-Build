@@ -14,7 +14,7 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
                 padding-right: 8px;
                 font-size: 14px;
                 font-weight: 500;
-                height: 44px;
+                height: 26px;
                 border: none;
                 margin-right: 7px;
                 margin-left: 11px;
@@ -39,17 +39,17 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
 
           setTimeout(() => {
 
-            imgbadge.src = result.badge +"?t=" + new Date().getTime();
-          }, 2000)
+            imgbadge.src = result.badge + "?t=" + new Date().getTime();
+          }, 500)
 
           const t = setInterval(() => {
-          imgbadge.src = result.badge +"?t=" + new Date().getTime();;
-        }, 10000)
-        setTimeout(()=>{
-          clearInterval(t)
-        },180000)
+            imgbadge.src = result.badge + "?t=" + new Date().getTime();;
+          }, 10000)
+          setTimeout(() => {
+            clearInterval(t)
+          }, 180000)
         })
-       
+
       }
 
 
