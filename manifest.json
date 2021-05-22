@@ -1,21 +1,28 @@
 {
-    "manifest_version": 2,
-    "name": "NotionBlog Trigger",
-    "version": "0.0.1",
-    "description": "Trigger netlify or vercel webhook to regenerate the website",
-    "permissions": ["storage"],
-    "content_scripts": [
-      {
-        "matches": [
-          "https://www.notion.so/*"
-        ],
-        "js": [
-          "src/inject.js"
-        ]
-      }
-    ],
-    "browser_action": {
-        "default_title": "Set your build hook details",
-        "default_popup": "popup.html"
-      }
+  "manifest_version": 2,
+  "name": "NotionBuild",
+  "version": "0.0.1",
+  "description": "An extension that injects a button in Notion.so to Trigger Netlify - Vercel Build hook",
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.notion.so/*"
+      ],
+      "js": [
+        "src/inject.js"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "./assets/icon16.png",
+    "24": "assets/icon24.png",
+    "32": "/assets/icon32.png"
+  },
+  "browser_action": {
+    "default_title": "Set your build hook details",
+    "default_popup": "popup.html"
   }
+}
