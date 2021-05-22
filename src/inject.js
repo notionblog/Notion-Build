@@ -35,23 +35,21 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
         let buildButton = document.getElementById('buildButton')
 
         buildButton.addEventListener('click', async function () {
-          let imageBadge = document.querySelector('#imageBadge')
-          console.log(imageBadge)
           await fetch(buildHookUrl, { method: "POST" })
-          if (imageBadge !== null)
-            imageBadge.parentNode.removeChild(imageBadge)
+
           setTimeout(() => {
-            imgbadge = document.createElement('img');
-            imgbadge.setAttribute('id', "imageBadge")
-            imgbadge.src = result.badge
-            toolbar.prepend(imgbadge)
+
+            imgbadge.src = result.badge +"?t=" + new Date().getTime();
           }, 2000)
 
-
+          const t = setInterval(() => {
+          imgbadge.src = result.badge +"?t=" + new Date().getTime();;
+        }, 10000)
+        setTimeout(()=>{
+          clearInterval(t)
+        },180000)
         })
-        // setInterval(() => {
-        //   imgbadge.src = result.badge;
-        // }, 1000)
+       
       }
 
 
