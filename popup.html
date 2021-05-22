@@ -11,8 +11,6 @@
 
         }
 
-
-
         .container img {
             width: 83px;
             display: block;
@@ -36,7 +34,7 @@
             border: 3px solid #000000;
         }
 
-        button {
+        #setTrigger {
             width: 100%;
             padding: 16px;
             cursor: pointer;
@@ -69,16 +67,16 @@
             <img src="/assets/logo.png" alt="Notion Build">
         </header>
 
-        <main>
+        <main id="app">
             <label for="buildHook">Build Hook URL <small>* required</small></label>
             <input id="buildHook" name="buildHook" type="text">
             <label for="statusbadge">Deploy status badge image link <small>(optional)</small></label>
             <input id="statusbadge" name="statusbadge" type="text">
-            <button id="setTrigger">Save</button>
+            <input type="button" id="setTrigger">
         </main>
 
         <footer>
-            &copy; Notion Build <br /> Create your Notion free blog: <a href="https://mynotion.blog">mynotion.blog</a>
+            &copy; Notion Build <br /> Create your free Notion blog: <a href="https://mynotion.blog">mynotion.blog</a>
             <br>
             Made By <a href="https://github.com/yudax42">yudax42</a>
         </footer>
