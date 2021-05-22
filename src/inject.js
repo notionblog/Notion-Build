@@ -1,8 +1,9 @@
-let buildHookUrl;
-
 chrome.storage.sync.get(['link', 'badge'], function (result) {
-  buildHookUrl = result.link
-  if (buildHookUrl) {
+  // Grab Buil Hook Url and Status badge image from Storage
+  let { link, badge } = result;
+
+  if (link) {
+    // Create a Div Element to inject Trigger Build button into it
     const buttonDiv = document.createElement('DIV')
     buttonDiv.setAttribute("id", "trigger_build")
     buttonDiv.innerHTML = `
@@ -18,40 +19,45 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
                 border: none;
                 margin-right: 7px;
                 margin-left: 11px;
-                border-radius: 2px;" type="submit">🚀 Publish changes</button>
+                border-radius: 2px;" type="submit">🚀 Publish Changes</button>
             `
-    let imgbadge = document.createElement('img');
-    imgbadge.setAttribute('id', "imageBadge")
-    if (result.badge) {
-      imgbadge.src = result.badge
+    // Create Status Badge Tag If exists
+    let statusBadge = document.createElement('img');
+    if (badge) {
+      statusBadge.setAttribute('id', "imageBadge")
+      statusBadge.src = badge
     }
 
+    // Create an observer to keep track of changes being made to the DOM (Notion is a REACT app)
     const observer = new MutationObserver(function () {
-      let toolbar = document.getElementsByClassName('notion-collection-view-item-add')[0]
-      let button = document.getElementById("trigger_build")
+      // Grab notion Toolbar
+      let toolbar = document.querySelector('.notion-collection-view-item-add')
+      // Grab the Build Button
+      let button = document.querySelector("#trigger_build")
+      // Check If the build button not rendered in DOM Tree and prepend it before the toolBar
       if (toolbar && !button) {
         toolbar.prepend(buttonDiv)
-        if (result.badge) toolbar.prepend(imgbadge)
-        let buildButton = document.getElementById('buildButton')
-
+        // Check if the status badge link exists and prepend it 
+        if (badge) toolbar.prepend(statusBadge)
+        // Addign click event listend
+        let buildButton = document.querySelector('#buildButton')
         buildButton.addEventListener('click', async function () {
-          await fetch(buildHookUrl, { method: "POST" })
-
+          // Trigger the hook using post method 
+          await fetch(link, { method: "POST" })
+          // Update the badge status after click 500 ms
           setTimeout(() => {
-
-            imgbadge.src = result.badge + "?t=" + new Date().getTime();
+            statusBadge.src = result.badge + "?t=" + new Date().getTime();
           }, 500)
-
+          // Update the badge status each 10s to see if the build is completed
           const t = setInterval(() => {
-            imgbadge.src = result.badge + "?t=" + new Date().getTime();;
+            statusBadge.src = result.badge + "?t=" + new Date().getTime();;
           }, 10000)
+          // clear the interval after 3 min
           setTimeout(() => {
             clearInterval(t)
           }, 180000)
         })
-
       }
-
 
     });
     const observerConfig = {
