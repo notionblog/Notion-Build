@@ -1,25 +1,90 @@
-<div class="container">
-    <img src="/assets/trigger.png" alt="trigger hook" />
-    <h1>Enter Build Hook</h1>
-    <input id="buildHook" type="text">
-    <input id="statusbadge" type="text">
-    <button id="setTrigger">set</button>
-</div>
+<html>
 
-<script src="src/extension.js"></script>
+<head>
+    <title>Notion Build</title>
+    <style>
+        html {
+            min-width: 400px;
+            margin: 10px;
+            border-radius: 15px;
+            padding-bottom: 10%;
+
+        }
 
 
-<style>
-    html {
-        min-width: 300px;
-        margin: 10px;
-        border-radius: 15px;
-        height: 500px;
-    }
 
-    .container {}
+        .container img {
+            width: 83px;
+            display: block;
+            margin: auto;
+            margin-bottom: 10%;
+        }
 
-    .container img {
-        width: 100%;
-    }
-</style>
+        h1 {
+            color: aquamarine;
+            text-align: center;
+            margin: 12% 0;
+        }
+
+        input {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            margin-bottom: 6%;
+            color: black;
+
+            border: 3px solid #000000;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            cursor: pointer;
+            display: block;
+            background: #000000;
+            outline: none;
+            border: none;
+            font-size: 15pt;
+            color: #fff;
+        }
+
+        label {
+            font-size: 12pt;
+            margin-bottom: 3%;
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #545454;
+        }
+    </style>
+    <script src="src/extension.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="/assets/logo.png" alt="Notion Build">
+        </header>
+
+        <main>
+            <label for="buildHook">Build Hook URL <small>* required</small></label>
+            <input id="buildHook" name="buildHook" type="text">
+            <label for="statusbadge">Deploy status badge image link <small>(optional)</small></label>
+            <input id="statusbadge" name="statusbadge" type="text">
+            <button id="setTrigger">Save</button>
+        </main>
+
+        <footer>
+            &copy; Notion Build <br /> Create your Notion free blog: <a href="https://mynotion.blog">mynotion.blog</a>
+            <br>
+            Made By <a href="https://github.com/yudax42">yudax42</a>
+        </footer>
+
+
+    </div>
+</body>
+
+</html>
