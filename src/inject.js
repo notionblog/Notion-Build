@@ -44,18 +44,32 @@ chrome.storage.sync.get(['link', 'badge'], function (result) {
         buildButton.addEventListener('click', async function () {
           // Trigger the hook using post method 
           await fetch(link, { method: "POST" })
-          // Update the badge status after click 500 ms
-          setTimeout(() => {
-            statusBadge.src = result.badge + "?t=" + new Date().getTime();
-          }, 500)
-          // Update the badge status each 10s to see if the build is completed
-          const t = setInterval(() => {
-            statusBadge.src = result.badge + "?t=" + new Date().getTime();;
-          }, 10000)
-          // clear the interval after 3 min
-          setTimeout(() => {
-            clearInterval(t)
-          }, 180000)
+          // If the user have set the badge icon it will shows the badge image
+          if (badge) {
+            // Update the badge status after click 500 ms
+            setTimeout(() => {
+              statusBadge.src = result.badge + "?t=" + new Date().getTime();
+            }, 500)
+            // Update the badge status each 10s to see if the build is completed
+            const t = setInterval(() => {
+              statusBadge.src = result.badge + "?t=" + new Date().getTime();;
+            }, 10000)
+            // clear the interval after 3 min
+            setTimeout(() => {
+              clearInterval(t)
+            }, 180000)
+          } else {
+            // if the badge link not set a div is created to inform the user that the build is started
+            let buildStatusDiv = document.createElement('div');
+            buildStatusDiv.innerHTML = `<span style="background: orange;
+            padding: 13px; ">⚙️ Building</span>`
+            toolbar.prepend(buildStatusDiv)
+            setTimeout(() => {
+              buildStatusDiv.parentNode.removeChild(buildStatusDiv)
+            }, 3000)
+          }
+
+
         })
       }
 
